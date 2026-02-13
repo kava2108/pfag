@@ -1,0 +1,130 @@
+openapi: 3.0.3
+info:
+  title: PDF Form Auto-Generator API
+  version: 1.0.0
+  description: |
+    静的PDFから入力可能なAcroForm付きPDFを生成する API。
+    下線・チェックボックスを自動検出し、フォームフィールドを埋め込む。
+
+servers:
+  - url: https://api.example.com
+    description: 本番環境（例）
+  - url: http://localhost:8000
+    description: ローカル開発環境
+
+paths:
+  /v1/formify:
+    post:
+      summary: PDF をフォーム化する
+      description: |
+        静的PDFを受け取り、下線・チェックボックスを検出して
+        入力可能な AcroForm フィールドを埋め込んだPDFを返却する。
+      operationId: formifyPdf
+      tags:
+        - formify
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: 入力PDFファイル（バイナリ）
+                options:
+                  $ref: '#/components/schemas/Options'
+            encoding:
+              file:
+                contentType: application/pdf
+              options:
+                contentType: application/json
+      responses:
+        '200':
+          description: フォーム化されたPDFを返却
+          headers:
+            X-PFAG-Warning:
+              description: |
+                特記事項・警告情報。
+                例：
+                  - no_fields_detected（入力欄が検出されなかった）
+                  - partial_detection（検出が一部のみ成功）
+              schema:
+                type: string
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+
+        '422':
+          description: |
+            PDF解析不能、または画像化失敗。
+            入力ファイルが壊れている場合など。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                invalid_pdf:
+                  summary: 壊れたPDF
+                  value:
+                    detail: "invalid_pdf: PDF を解析できませんでした"
+                render_failed:
+                  summary: 画像化失敗
+                  value:
+                    detail: "render_failed: PDF を画像に変換できませんでした"
+
+        '500':
+          description: |
+            サーバ内部エラーまたはタイムアウト。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                detection_failed:
+                  summary: 検出処理の内部エラー
+                  value:
+                    detail: "detection_failed: 下線またはチェックボックス検出中にエラーが発生しました"
+                unexpected_error:
+                  summary: 予期しないエラー
+                  value:
+                    detail: "unexpected_error: 内部エラーが発生しました"
+
+components:
+  schemas:
+    Options:
+      type: object
+      description: |
+        PDF解析時のオプション。
+        multipart の `options` に JSON として渡される。
+      properties:
+        detection_mode:
+          type: string
+          enum: [auto, text_only, checkbox_only]
+          description: |
+            検出モード。
+            - auto: 下線・チェックボックス両方を検出
+            - text_only: 下線のみ検出
+            - checkbox_only: チェックボックスのみ検出
+        sensitivity:
+          type: number
+          format: float
+          minimum: 0.1
+          maximum: 1.0
+          description: |
+            検出感度。値が大きいほど「弱い線」も検出しやすくなる。
+        output_prefix:
+          type: string
+          description: |
+            生成されるフィールド名の接頭辞。
+            例：pfag_ → pfag_field_p1_t1 のような形式。
+
+    ErrorResponse:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: エラー内容の説明メッセージ
