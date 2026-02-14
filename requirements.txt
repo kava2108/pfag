@@ -1,2 +1,6 @@
 fastapi
 uvicorn
+
+# PDF rendering
+WeasyPrint
+PyPDF2

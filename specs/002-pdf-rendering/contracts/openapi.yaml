@@ -1,0 +1,66 @@
+openapi: 3.0.0
+info:
+  title: PDF Rendering API
+  version: 1.0.0
+paths:
+  /pdf:
+    post:
+      summary: HTML→PDF変換
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                html:
+                  type: string
+      responses:
+        '200':
+          description: PDFファイル
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: 不正なリクエスト
+  /pdf/preview:
+    get:
+      summary: PDFプレビュー
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: PDFプレビュー
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: PDFが見つかりません
+  /pdf/history:
+    get:
+      summary: PDF生成履歴取得
+      responses:
+        '200':
+          description: 履歴一覧
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    created_at:
+                      type: string
+                      format: date-time
+                    filename:
+                      type: string
