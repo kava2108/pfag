@@ -1,0 +1,104 @@
+openapi: 3.0.3
+info:
+  title: Underline Detection API
+  version: 0.1.0
+paths:
+  /underline/detect:
+    post:
+      summary: Detect underlines in an image or PDF
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                min_line_width:
+                  type: integer
+                  default: 30
+                line_gap_threshold:
+                  type: integer
+                  default: 5
+      responses:
+        '200':
+          description: Detection result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  underlines:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Underline'
+                  boxes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BoundingBox'
+  /underline/preview:
+    post:
+      summary: Get preview image with detected underlines
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Preview image
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+components:
+  schemas:
+    Underline:
+      type: object
+      properties:
+        id:
+          type: string
+        start_x:
+          type: integer
+        start_y:
+          type: integer
+        end_x:
+          type: integer
+        end_y:
+          type: integer
+        width:
+          type: integer
+        thickness:
+          type: integer
+    BoundingBox:
+      type: object
+      properties:
+        id:
+          type: string
+        x:
+          type: integer
+        y:
+          type: integer
+        width:
+          type: integer
+        height:
+          type: integer
+    FieldLayoutRule:
+      type: object
+      properties:
+        id:
+          type: string
+        height:
+          type: integer
+        offset:
+          type: integer
+        inset:
+          type: integer

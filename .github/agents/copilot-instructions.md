@@ -22,6 +22,7 @@ cd src [ONLY COMMANDS FOR ACTIVE TECHNOLOGIES][ONLY COMMANDS FOR ACTIVE TECHNOLO
 Python 3.8+: Follow standard conventions
 
 ## Recent Changes
+- 002-pdf-rendering: Added [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
 
 - 001-fastapi-api-server-init: Added Python 3.8+ + FastAPI, uvicorn
 
