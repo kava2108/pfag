@@ -1,0 +1,54 @@
+openapi: 3.0.0
+info:
+  title: Checkbox Detection API
+  version: 1.0.0
+paths:
+  /checkbox/detect:
+    post:
+      summary: Detect checkboxes in image or PDF
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                min_size:
+                  type: integer
+                  default: 15
+                max_size:
+                  type: integer
+                  default: 50
+                fill_threshold:
+                  type: number
+                  default: 0.5
+      responses:
+        '200':
+          description: Detection result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  checkboxes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CheckBox'
+components:
+  schemas:
+    CheckBox:
+      type: object
+      properties:
+        x:
+          type: integer
+        y:
+          type: integer
+        width:
+          type: integer
+        height:
+          type: integer
+        is_checked:
+          type: boolean
