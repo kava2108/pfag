@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Packaging
+*.egg-info/
+*.dist-info/
+build/
+dist/
+
+# Test caches
+.pytest_cache/
+.mypy_cache/
+
+# Editor / IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Speckit generated context
+.specify/context/
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# Sample images (keep only minimal test data)
+sample_images/
+samples/
+images/
+
+# PDF / image processing intermediate outputs
+output/
+results/
+cache/
