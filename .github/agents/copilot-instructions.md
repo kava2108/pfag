@@ -3,6 +3,8 @@
 Auto-generated from all feature plans. Last updated: 2026-02-14
 
 ## Active Technologies
+- Python 3.11 + OpenCV, NumPy, PyMuPDF, Pillow, FastAPI (004-checkbox-detection)
+- N/A（ファイル入出力のみ） (004-checkbox-detection)
 
 - Python 3.8+ + FastAPI, uvicorn (001-fastapi-api-server-init)
 
@@ -22,6 +24,7 @@ cd src [ONLY COMMANDS FOR ACTIVE TECHNOLOGIES][ONLY COMMANDS FOR ACTIVE TECHNOLO
 Python 3.8+: Follow standard conventions
 
 ## Recent Changes
+- 004-checkbox-detection: Added Python 3.11 + OpenCV, NumPy, PyMuPDF, Pillow, FastAPI
 - 002-pdf-rendering: Added [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
 
 - 001-fastapi-api-server-init: Added Python 3.8+ + FastAPI, uvicorn
