@@ -1,6 +1,12 @@
+
 fastapi
 uvicorn
 
 # PDF rendering
 WeasyPrint
 PyPDF2
+
+# Coordinate conversion dependencies
+Pillow
+numpy
+pytest
