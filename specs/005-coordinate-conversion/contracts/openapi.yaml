@@ -1,0 +1,60 @@
+openapi: 3.0.3
+info:
+  title: Coordinate Conversion API
+  version: 1.0.0
+paths:
+  /coordinate-convert:
+    post:
+      summary: 画像座標→PDF座標変換
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                x_img:
+                  type: integer
+                  description: 画像X座標
+                y_img:
+                  type: integer
+                  description: 画像Y座標
+                img_width:
+                  type: integer
+                  description: 画像幅(px)
+                img_height:
+                  type: integer
+                  description: 画像高さ(px)
+                pdf_width:
+                  type: number
+                  description: PDF幅(pt)
+                pdf_height:
+                  type: number
+                  description: PDF高さ(pt)
+              required:
+                - x_img
+                - y_img
+                - img_width
+                - img_height
+                - pdf_width
+                - pdf_height
+      responses:
+        '200':
+          description: PDF座標変換結果
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  x_pdf:
+                    type: number
+                    description: PDF X座標
+                  y_pdf:
+                    type: number
+                    description: PDF Y座標
+                  error_x:
+                    type: number
+                    description: X座標変換誤差
+                  error_y:
+                    type: number
+                    description: Y座標変換誤差

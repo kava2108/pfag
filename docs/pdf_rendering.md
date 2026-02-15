@@ -1,3 +1,25 @@
+# 4. POST /coordinate-convert
+- 画像座標→PDF座標変換API
+- リクエスト: { "x_img": int, "y_img": int, "img_width": int, "img_height": int, "pdf_width": float, "pdf_height": float }
+- レスポンス: { "x_pdf": float, "y_pdf": float, "error_x": float, "error_y": float, "warning": str }
+
+## 使い方例（座標変換）
+- CLI: pfag-cli coordinate-convert --x 100 --y 200 --img-width 1200 --img-height 900 --pdf-width 595 --pdf-height 842
+- API: POST /coordinate-convert
+  {
+    "x_img": 100,
+    "y_img": 200,
+    "img_width": 1200,
+    "img_height": 900,
+    "pdf_width": 595.0,
+    "pdf_height": 842.0
+  }
+  → { "x_pdf": 49.58, "y_pdf": 654.22, "error_x": 0.00, "error_y": 0.00, "warning": "" }
+
+## 注意事項（座標変換）
+- アスペクト比差異が大きい場合は警告（warning）を返す
+- 座標変換誤差は±2pt以内
+- 入力値バリデーションあり（サイズ0や範囲外座標はエラー）
 # PDFレンダリングAPI ドキュメント
 
 ## 概要
