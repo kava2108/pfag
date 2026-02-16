@@ -1,0 +1,102 @@
+openapi: 3.0.3
+info:
+  title: AcroForm Field Generation API
+  version: 1.0.0
+  description: |
+    PDFに/Tx（テキストフィールド）・/Btn（チェックボックス）を追加するAPI。
+    既存AcroFormへのappend、命名規則、エラー処理も含む。
+servers:
+  - url: http://localhost:8000
+    description: ローカル開発環境
+paths:
+  /v1/acroform/fields:
+    post:
+      summary: AcroFormフィールド追加
+      description: |
+        指定PDFに/Tx（テキストフィールド）・/Btn（チェックボックス）を追加する。
+        既存AcroFormがある場合はappend。
+      operationId: addAcroFormFields
+      tags:
+        - acroform
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddFieldsRequest'
+      responses:
+        '200':
+          description: フィールド追加済みPDF（バイナリ）
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: バリデーションエラー（無効な座標・サイズ等）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: フィールド名重複
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '413':
+          description: 上限超過（フィールド数/ファイルサイズ）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: 認証エラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    AddFieldsRequest:
+      type: object
+      properties:
+        pdf:
+          type: string
+          format: binary
+          description: 入力PDFファイル（base64またはバイナリ）
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/AcroFormField'
+    AcroFormField:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum: [Tx, Btn]
+        page:
+          type: integer
+        rect:
+          type: array
+          items:
+            type: number
+          minItems: 4
+          maxItems: 4
+        value:
+          oneOf:
+            - type: string
+            - type: boolean
+            - type: 'null'
+        required:
+          type: boolean
+        options:
+          type: object
+          additionalProperties: true
+    ErrorResponse:
+      type: object
+      properties:
+        detail:
+          type: string
