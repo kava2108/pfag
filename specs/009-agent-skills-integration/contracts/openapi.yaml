@@ -1,0 +1,116 @@
+openapi: 3.0.3
+info:
+  title: Agent Skills API
+  version: 1.0.0
+  description: |
+    Agent Skills連携機能のAPI仕様。スキルスキーマ定義、APIラッパ、感度調整、警告説明を含む。
+servers:
+  - url: http://localhost:8000
+paths:
+  /skills:
+    post:
+      summary: スキルスキーマの登録
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SkillSchema'
+      responses:
+        '201':
+          description: 登録成功
+        '400':
+          description: 不正なスキーマ
+  /skills/{skill_name}/call:
+    post:
+      summary: スキルAPIラッパ呼び出し
+      parameters:
+        - name: skill_name
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                input:
+                  type: object
+                sensitivity:
+                  $ref: '#/components/schemas/SensitivityParam'
+      responses:
+        '200':
+          description: 呼び出し成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillOutput'
+        '400':
+          description: 入力エラー
+        '422':
+          description: 感度パラメータ不正
+  /warnings:
+    get:
+      summary: 警告メッセージ一覧取得
+      responses:
+        '200':
+          description: 一覧取得成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WarningMessage'
+components:
+  schemas:
+    SkillSchema:
+      type: object
+      properties:
+        skill_name:
+          type: string
+        input_schema:
+          type: object
+        output_schema:
+          type: object
+        description:
+          type: string
+        version:
+          type: string
+    SensitivityParam:
+      type: object
+      properties:
+        param_name:
+          type: string
+        value:
+          type: number
+        min_value:
+          type: number
+        max_value:
+          type: number
+        default:
+          type: number
+        description:
+          type: string
+    WarningMessage:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        detail:
+          type: string
+        lang:
+          type: string
+    SkillOutput:
+      type: object
+      properties:
+        result:
+          type: object
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningMessage'

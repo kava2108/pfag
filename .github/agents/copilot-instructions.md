@@ -12,6 +12,8 @@ Auto-generated from all feature plans. Last updated: 2026-02-14
 - Python 3.8+ + FastAPI, PyPDF2 or pdfrw, TemporaryDirectory, JSON (007-pdf-output-processing)
 - 一時ファイル（OS temp dir）、永続ストレージ不要 (007-pdf-output-processing)
 - Python 3.12 + FastAPI, pytest, python-multipart (008-formify-api-integration-test)
+- Python 3.12 + FastAPI, pytest, 標準json, typing, pydantic（バリデーション用途） (009-agent-skills-integration)
+- N/A（ファイルまたはメモリ内、DBは現状不要） (009-agent-skills-integration)
 
 - Python 3.8+ + FastAPI, uvicorn (001-fastapi-api-server-init)
 
@@ -31,9 +33,9 @@ cd src [ONLY COMMANDS FOR ACTIVE TECHNOLOGIES][ONLY COMMANDS FOR ACTIVE TECHNOLO
 Python 3.8+: Follow standard conventions
 
 ## Recent Changes
+- 009-agent-skills-integration: Added Python 3.12 + FastAPI, pytest, 標準json, typing, pydantic（バリデーション用途）
 - 008-formify-api-integration-test: Added Python 3.12 + FastAPI, pytest, python-multipart
 - 007-pdf-output-processing: Added Python 3.8+ + FastAPI, PyPDF2 or pdfrw, TemporaryDirectory, JSON
-- 006-acroform-field-generation: Added Python 3.11 + FastAPI, PyPDF2, WeasyPrint, Pillow, numpy
 
 
 <!-- MANUAL ADDITIONS START -->
