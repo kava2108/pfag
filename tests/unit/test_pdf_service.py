@@ -17,12 +17,22 @@ def test_pdf_size_limit(tmp_path):
     except ValueError as e:
         assert "PDFサイズが大きすぎます" in str(e)
 
+
 def test_cleanup_tmp_files(tmp_path):
+    import time
     service = PDFService(tmp_dir=str(tmp_path))
-    # ダミーPDF作成
-    pdf_path = os.path.join(tmp_path, "dummy.pdf")
-    with open(pdf_path, "wb") as f:
-        f.write(b"%PDF-1.4 test")
-    os.utime(pdf_path, (0, 0))  # 最終更新をepochに
+    # 古いファイルを作成
+    old_file = os.path.join(tmp_path, "old.pdf")
+    with open(old_file, "wb") as f:
+        f.write(b"dummy")
+    old_time = time.time() - 2 * 86400
+    os.utime(old_file, (old_time, old_time))
+    # 新しいファイル
+    new_file = os.path.join(tmp_path, "new.pdf")
+    with open(new_file, "wb") as f:
+        f.write(b"dummy")
+    # 実行: 1日より古いファイルを削除
     removed = service.cleanup_tmp_files(days=1)
-    assert removed >= 1
+    assert removed == 1
+    assert not os.path.exists(old_file)
+    assert os.path.exists(new_file)

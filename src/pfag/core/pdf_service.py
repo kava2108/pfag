@@ -5,9 +5,10 @@ from tempfile import gettempdir
 from typing import Optional, List, Dict
 from datetime import datetime
 
+
 class PDFService:
-        MAX_HTML_LENGTH = 100_000  # 例: 10万文字まで
-        MAX_PDF_SIZE = 10 * 1024 * 1024  # 例: 10MB
+    MAX_HTML_LENGTH = 100_000  # 例: 10万文字まで
+    MAX_PDF_SIZE = 10 * 1024 * 1024  # 例: 10MB
     """
     PDF生成・管理サービス
     - HTML→PDF変換
