@@ -1,3 +1,7 @@
+# Agent Skills連携との関係
+
+PDFレンダリング機能は、Agent Skills連携の一部スキル（例：PDF解析・変換）として拡張可能。
+スキルAPI経由でPDF操作・解析・出力処理を統合できる設計。
 # 4. POST /coordinate-convert
 - 画像座標→PDF座標変換API
 - リクエスト: { "x_img": int, "y_img": int, "img_width": int, "img_height": int, "pdf_width": float, "pdf_height": float }

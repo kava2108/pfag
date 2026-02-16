@@ -1,3 +1,23 @@
+# Agent Skills連携 概要
+
+## 機能構成
+- Skillスキーマ定義（入力/出力/説明/バージョン）
+- Skill呼び出しAPI/CLIラッパ
+- 感度調整・警告説明API/CLI
+
+## 主なモジュール
+- src/pfag/skills/schema.py: SkillSchemaモデル
+- src/pfag/skills/wrapper.py: SkillWrapper（APIラッパ）
+- src/pfag/skills/sensitivity.py: SensitivityParam（感度調整）
+- src/pfag/skills/warning.py: WarningMessage/警告ロジック
+- src/pfag/api/skills.py: FastAPIルーティング
+- src/pfag/cli/skills.py: Typer CLI
+
+## テスト
+- contract/integration/unitテストで各USを独立検証
+
+## 今後の拡張
+- DB保存/外部API連携/スキル自動発見 など
 # PFAG モジュール設計書
 
 ## 1. モジュール一覧
