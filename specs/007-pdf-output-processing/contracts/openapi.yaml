@@ -1,0 +1,55 @@
+openapi: 3.0.3
+info:
+  title: PDFフィールド書き込みAPI
+  version: 1.0.0
+paths:
+  /pdf/write-fields:
+    post:
+      summary: 既存PDFにAcroFormフィールドを書き込む
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pdf_id:
+                  type: string
+                  description: 対象PDFファイルID
+                fields:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      type:
+                        type: string
+                        enum: [Tx, Btn]
+                      page:
+                        type: integer
+                      rect:
+                        type: array
+                        items:
+                          type: number
+                        minItems: 4
+                        maxItems: 4
+                      options:
+                        type: object
+            required:
+              - pdf_id
+              - fields
+      responses:
+        '200':
+          description: フィールド埋め込み済みPDF（バイナリ）
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: 入力エラー
+        '404':
+          description: PDFファイル未発見
+        '500':
+          description: サーバ内部エラー

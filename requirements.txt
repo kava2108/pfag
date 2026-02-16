@@ -4,9 +4,21 @@ uvicorn
 
 # PDF rendering
 WeasyPrint
+
 PyPDF2
+pdfrw
+python-multipart
+httpx
+pydantic
+typer
+tempfile
+loguru
+python-dotenv
 
 # Coordinate conversion dependencies
 Pillow
 numpy
+
 pytest
+black
+isort

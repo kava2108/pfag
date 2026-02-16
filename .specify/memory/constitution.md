@@ -1,50 +1,49 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# PFAG Constitution
+
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Library-First
+- すべての機能は独立したライブラリとして設計・実装すること
+- ライブラリは自己完結・独立テスト・ドキュメント必須
+- 組織都合のみのライブラリは禁止
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. CLI & API Interface
+- すべてのライブラリはCLIまたはAPI経由で機能を公開すること
+- 入出力はテキスト（stdin/args→stdout, エラーはstderr）
+- JSONおよび人間可読形式をサポート
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Test-First (NON-NEGOTIABLE)
+- TDD必須：テスト→ユーザー承認→テスト失敗→実装
+- Red-Green-Refactorサイクル厳守
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Integration Testing
+- 新規ライブラリ・契約変更・サービス間通信・共通スキーマは必ず統合テストを実施
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Observability & Versioning
+- テキストI/Oでデバッグ容易性を担保
+- 構造化ログ必須
+- バージョンはMAJOR.MINOR.PATCH方式
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+## Additional Constraints
+- Python 3.8以上、FastAPI, OpenCV, PyMuPDF, pdfrw/PyPDF2を推奨
+- セキュリティ: 一時ファイルは即時削除、外部入力はバリデーション必須
+- ドキュメント・API仕様は常に最新を維持
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Development Workflow
+- すべてのPRはconstitution遵守をレビューチェック
+- テスト・ドキュメント・型アノテーション必須
+- 複雑化は正当な理由がある場合のみ許容
+- 仕様・設計・実装・テスト・デプロイの各段階で合意形成
+
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+- 本constitutionは他の全ての開発慣行に優先
+- 改訂には文書化・承認・移行計画が必要
+- すべてのPR/レビューで遵守確認
+- 複雑性は必ず正当化
+- ランタイム開発ガイダンスはREADME.mdを参照
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-02-16 | **Last Amended**: 2026-02-16
