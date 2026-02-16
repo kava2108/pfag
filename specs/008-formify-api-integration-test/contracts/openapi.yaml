@@ -1,0 +1,53 @@
+openapi: 3.0.3
+info:
+  title: PFAG Formify API
+  version: 1.0.0
+paths:
+  /v1/formify:
+    post:
+      summary: PDFフォーム化
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: PDFファイル
+                options:
+                  type: string
+                  description: オプションJSON（detection_mode, sensitivity, output_prefix）
+      responses:
+        '200':
+          description: 正常（PDFバイナリ返却）
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+          headers:
+            X-PFAG-Warning:
+              schema:
+                type: string
+              description: 検出0件時のみ付与
+        '422':
+          description: バリデーションエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+        '500':
+          description: サーバ内部エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string

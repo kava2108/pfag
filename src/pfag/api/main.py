@@ -3,7 +3,9 @@ from fastapi.responses import JSONResponse
 import logging
 
 
+
 from pfag.api.pdf import router as pdf_router
+from pfag.api.formify import router as formify_router
 
 app = FastAPI()
 
@@ -11,8 +13,11 @@ app = FastAPI()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("pfag.api")
 
+
 # PDF APIルーターを組み込む
 app.include_router(pdf_router)
+# formify APIルーターを組み込む
+app.include_router(formify_router)
 
 @app.get("/health", response_class=JSONResponse)
 def health():
