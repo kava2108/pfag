@@ -1,17 +1,14 @@
-
 fastapi
 uvicorn
 
-# PDF rendering
-WeasyPrint
-
+# PDF processing
+pymupdf
 PyPDF2
 pdfrw
 python-multipart
 httpx
 pydantic
 typer
-tempfile
 loguru
 python-dotenv
 
@@ -19,6 +16,7 @@ python-dotenv
 Pillow
 numpy
 
+# Dev tools
 pytest
 black
 isort
